@@ -8,9 +8,9 @@ router.post('/login', (req, res) => {
   console.log('[LOGIN] Request recibida');
   console.log('[LOGIN] Body:', req.body);
 
-  const { id, nombre, mail, secret } = req.body;
+  const { nombre, mail, secret } = req.body;
 
-  if (!id || !nombre || !mail || !secret) {
+  if (!nombre || !mail || !secret) {
     console.log('[LOGIN] Error: Faltan datos requeridos');
     return res.status(400).json({ error: 'Faltan datos requeridos: id, nombre, mail, secret' });
   }
@@ -20,7 +20,7 @@ router.post('/login', (req, res) => {
     return res.status(401).json({ error: 'Secret inválido' });
   }
 
-  const user = { id, nombre, mail };
+  const user = { nombre, mail };
   const token = jwt.sign(user, process.env.JWT_SECRET);
 
   console.log('[LOGIN] Token generado para usuario:', nombre);

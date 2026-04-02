@@ -20,5 +20,5 @@ app.get('/health', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('[SERVER] Servidor corriendo en http://localhost:' + PORT);
+  console.log('[SERVER] Servidor corriendo en 181.30.15.92:' + PORT);
 });
