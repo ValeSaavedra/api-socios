@@ -12,6 +12,11 @@ const authenticateToken = (req, res, next) => {
     return res.status(401).json({ error: 'Token requerido' });
   }
 
+//PRUEBA TEMPORAL
+  console.log('[AUTH] Token recibido exactamente:', token);
+  console.log('[AUTH] Longitud del token:', token?.length);
+  console.log('[AUTH] JWT_SECRET usado:', process.env.JWT_SECRET);
+// FIN PRUEBA TEMPORAL
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
       console.log('[AUTH] Error: Token inválido', err.message);

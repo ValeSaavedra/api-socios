@@ -8,6 +8,11 @@ router.post('/login', (req, res) => {
   console.log('[LOGIN] Request recibida');
   console.log('[LOGIN] Body:', req.body);
 
+  //PRUEBA TEMPORAL
+  console.log('[LOGIN] JWT_SECRET usado para firmar:', process.env.JWT_SECRET);
+  console.log('[LOGIN] Longitud del secret:', process.env.JWT_SECRET?.length);
+  //FIN PRUEBA TEMPORAL
+
   const { nombre, mail, secret } = req.body;
 
   if (!nombre || !mail || !secret) {
@@ -22,6 +27,13 @@ router.post('/login', (req, res) => {
 
   const user = { nombre, mail };
   const token = jwt.sign(user, process.env.JWT_SECRET);
+
+  //PRUEBA TEMPORAL
+  console.log('[LOGIN] Token generado:', token);
+    // Decodificar para ver el algoritmo usado
+  const decodedHeader = jwt.decode(token, { complete: true });
+  console.log('[LOGIN] Algoritmo usado:', decodedHeader.header.alg);
+  //FIN PRUEBA TEMPORAL
 
   console.log('[LOGIN] Token generado para usuario:', nombre);
   console.log('[LOGIN] Token:', token);

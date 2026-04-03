@@ -3,7 +3,7 @@
 ## URL Base
 
 ```
-http://localhost:3000
+IP Servidor
 ```
 
 ## Autenticación
@@ -24,7 +24,6 @@ Content-Type: application/json
 
 ```json
 {
-  "id": "12345",
   "nombre": "Juan Pérez",
   "mail": "juan@ejemplo.com",
   "secret": "tu_api_secret_aqui"
@@ -33,11 +32,9 @@ Content-Type: application/json
 
 **Respuesta exitosa (200):**
 
-
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
-
 
 **Respuestas de error:**
 
@@ -57,13 +54,13 @@ Para acceder a datos de un socio, incluir el token en el header `Authorization` 
 ```
 Authorization: Bearer <token_obtenido_en_login>
 Content-Type: application/json
-
+```
 
 **Body:**
 
 ```
 {
-  "numero_socio : "12345" 
+  "numero_socio : "12345"
 }
 ```
 
@@ -71,19 +68,19 @@ Content-Type: application/json
 
 ```json
 {
-    "numero_socio": 
-    "id": "12345",
-    "nombre": "Juan",
-    "apellido":"Pérez"
-    "mail": "juan@ejemplo.com"
-  
+  "Socio": "12345",
+  "Nombre": "Juan",
+  "Apellido": "Pérez",
+  "Documento": "12345678",
+  "Email": "juan@ejemplo.com"
 }
 ```
 
 **Respuestas de error (404) - Socio no encontrado:**
+
 ```
 {
-    "error": "Socio no encontrado" 
+    "error": "Socio no encontrado"
 }
 
 **Respuestas de error de autenticación:**
@@ -95,58 +92,14 @@ Content-Type: application/json
 
 ---
 
-## Ejemplo con cURL
-
-### Obtener token:
-
-```bash
-curl -X POST http://localhost:3000/api/login \
-  -H "Content-Type: application/json" \
-  -d '{"id":"12345","nombre":"Juan Pérez","mail":"juan@ejemplo.com","secret":"tu_api_secret_aqui"}'
-```
-
-### Acceder a datos protegidos:
-
-```bash
-curl -X POST http://localhost:3000/api/datos \
-  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
-```
-
----
-
-## Ejemplo con JavaScript (fetch)
-
-```javascript
-// Obtener token
-const loginResponse = await fetch("http://localhost:3000/api/login", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    id: "12345",
-    nombre: "Juan Pérez",
-    mail: "juan@ejemplo.com",
-    secret: "tu_api_secret_aqui",
-  }),
-});
-
-const { token } = await loginResponse.json();
-
-// Usar token
-const datosResponse = await fetch("http://localhost:3000/api/datos", {
-  headers: { Authorization: `Bearer ${token}` },
-});
-
-const datos = await datosResponse.json();
-console.log(datos);
-```
 
 ---
 
 ## Notas Importantes
 
 1. **El token no expira** (según lo configurado)
-2. **El secret** debe coincidir con `API_SECRET` en el archivo `.env` del servidor
-3. **Guardar el token** de forma segura en el cliente
+2. **Guardar el token** de forma segura en el cliente
 4. **Incluir el token** en cada request a rutas protegidas con el formato `Bearer <token>`
 
 ---
+```
