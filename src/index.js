@@ -12,6 +12,16 @@ const PORT = process.env.PORT || 3000;
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(helmet());
+// Bloqueo todo método que no sea POST
+app.use((req, res, next) => {
+  if (req.method !== "POST") {
+    console.log(
+      `🔒 Método no permitido: ${req.method} ${req.path} - IP: ${req.ip}`,
+    );
+    return res.status(405).send(`Method Not Allowed`);
+  }
+  next();
+});
 app.use((req, res, next) => {
   const suspicious = /\.\.|%2E|%2F|%5C|\/etc\/|\/passwd|\.\.%5C/i;
   if (suspicious.test(req.url)) {
@@ -20,12 +30,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-/*const globalLImiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  limit: 100,
-  message: "Demasiadas solicitudes, intenta más tarde",
-});*/
-//app.use(globalLImiter);
 const healthLimiter = rateLimit({
   windowMs: 5 * 60 * 1000,
   limit: 10,
